@@ -56,6 +56,36 @@ app.post('/register', (req, res) => {
   })
 })
 
+// Insert user info from form to meetings database
+app.post('/office', (req, res) => {
+  console.log("Title: " + req.body.name)
+
+
+  const name = req.body.title
+  const topic = req.body.topic
+  const date = req.body.date
+  const time = req.body.time
+  const notes = req.body.notes
+  const location = req.body.location
+  const queryString = "INSERT INTO meetings (name, topic, date, time, notes, location) VALUES (?, ?, ?, ?, ?, ?)"
+
+
+  
+  
+
+  getConnection().query(queryString, [name, topic, date, time, notes, location], (err, results, fields) => {
+    if (err) {
+      console.log(name)
+      console.log("Failed to insert nmeeting: " + err)
+      res.sendStatus(500)
+      return
+    }
+   
+    console.log("Inserted a meeting with id: ", results.insertId);
+    res.end()
+  })
+})
+
 // Authenticate user
 app.post('/login', (req, res) => {
   // console.log("First name: " + req.body.create_first_name)
@@ -144,7 +174,7 @@ app.get("/members", (req, res) => {
 
 app.get("/meetings", (req, res) => {
   const connection = getConnection()
-  const queryString = "SELECT * FROM meetings"
+  const queryString = "SELECT name, date, time  from meetings"
   connection.query(queryString, (err, rows, fields) => {
     if (err) {
       console.log("Failed to query for users: " + err)

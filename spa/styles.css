@@ -15,7 +15,7 @@ body{
 #container{
     flex-direction: column;
     display:flex;
-    width: 400px;
+    width: 460px;
     margin: 0px auto;
     background-color: orange;
     border-radius: 10px;
@@ -33,6 +33,24 @@ body{
     margin: 0px auto;
     color: black;
 }
+#meetingCreate{
+
+}
+#upcoming{
+    display: inline-block;
+    background: yellow;
+    height:300px;
+    width: 175px;
+    margin:10px;
+}
+#history{
+    display: inline-block;
+    background: yellow;
+    height:300px;
+    width: 175px;
+    margin:10px;
+}
+
 nav{
     display: flex;
     justify-content: center;
@@ -57,7 +75,7 @@ label{
     float: right;
 }
 input{
-    width: 40%;
+    width: 200px;
     height: 2em;
     border-radius: 5px;
     margin: 10px;
@@ -67,6 +85,9 @@ input{
 .center{
     margin: 0px auto;
     text-align: center;
+}
+.inlineBlock{
+    display:inline-block;
 }
 .block{
     display: block;

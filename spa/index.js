@@ -139,6 +139,57 @@ function clickHandler(state){
                 });
         });
     }
+    if(state.pageContent === 'Office'){
+        console.log('i am doing my best');
+        const form = document.getElementById('create');
+
+        form.addEventListener('submit', (event) => {
+            // Might need to stop propigation
+            event.preventDefault();
+
+            // Get username and password values from form
+            let title = document.getElementById('title');
+            let topic = document.getElementById('topic');
+            let date = document.getElementById('date');
+            let time = document.getElementById('time');
+            let notes = document.getElementById('notes');
+            let location = document.getElementById('location')
+
+            
+            // Create json request
+            const data = {
+                'title': title.value,
+                'topic': topic.value,
+                'date': date.value,
+                'time': time.value,
+                'notes': notes.value,
+                'location': location.value
+                
+            };
+
+            // console.log(title);
+            // console.log(password.value);
+
+            axios
+                .post('http://localhost:3004/office', data)
+                .then(function(response){
+                    console.log(response.data);
+                    if(response.data.error){
+                        console.log(response);
+                        window.location.href = '/office';
+                    }
+                    else{
+                        console.log(response);
+                        window.location.href = '/meetings';
+                    }
+
+                    console.log(response);
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+        });
+    }
     if(state.pageContent === 'Members'){
         
         // Create json request
@@ -180,10 +231,12 @@ function clickHandler(state){
                 let list = document.getElementById('list');
 
                 Object.entries(response.data).forEach(
-                    ([ key, value ]) => list.innerHTML +=  `<tr><td width = "10%">${value.name} </td><td width="30%">${value.time} </td><td width="60%">${value.date}</td></tr>`
-                
+                    ([ key, value ]) => list.innerHTML +=  `
+                    <tr><td width = "10%">${value.name} </td><td width="30%">${value.time} </td><td width="60%">${value.date}</td></tr>`
                     
                 );
+                
+                
             })
             .catch(function(error){
                 console.log(error);
