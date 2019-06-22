@@ -9,7 +9,11 @@ import { capitalize } from 'lodash';
 import Navigo from 'navigo';
 import axios from 'axios';
 import { Member } from './components/pages';
-
+// var mysql = require('mysql');
+// var express = require('express');
+var session = require('express-session');
+// var bodyParser = require('body-parser');
+var path = require('path');
 const root = document.querySelector('#root');
 
 const router = new Navigo(window.location.origin);
@@ -64,7 +68,7 @@ function clickHandler(state){
             axios
                 .post('http://localhost:3004/login', data)
                 .then(function(response){
-                    console.log(response.data);
+                    // console.log(response.data);
                     if(response.data.error){
                         console.log(response.data.error);
                         // render(states.Login);
@@ -77,13 +81,42 @@ function clickHandler(state){
                         let err = document.getElementById('err');
                         let uName = response.data[0].username;
 
-                        console.log(response.data[0].username);
-
                         err.innerText = `Welcome Back ${uName}!!!`;
-                        Member.user = response.data;
+                        console.log(response.data)
+                        // Member.user = response.data;
+
+
+
+                        axios
+                        .get('http://localhost:3004/meetings', data)
+                        .then(function(response){
+                            // console.log(response.data);
+                            if(response.data.error){
+                                // window.location.href = '/register';
+                            }
+                            
+                            let list = document.getElementById('list');
+            
+                            Object.entries(response.data).forEach(
+                                ([ key, value ]) => list.innerHTML +=  `
+                                <tr><td width = "10%">${value.name} </td><td width="30%">${value.time} </td><td width="60%">${value.date}</td></tr>`
+                                
+                            );
+                            
+                            
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        });
+
+
+
+
+
+
                     }
 
-                    console.log(response);
+                    console.log(request.session.username);
                 })
                 .catch(function(error){
                     console.log(error);

@@ -39,8 +39,7 @@ body{
 #upcoming{
     display: inline-block;
     background: yellow;
-    height:300px;
-    width: 175px;
+    border-radius: 5px;
     margin:10px;
 }
 #history{
