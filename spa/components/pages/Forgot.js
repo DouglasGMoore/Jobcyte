@@ -1,18 +1,19 @@
 export default () => `
 <div id="container">
-        <form action="/user_create" method="POST">
+<div id ="err"></div>
+        <form id = 'forgot'>
             <div>
                 <label>username:
-                    <input type="text" name="create_first_name" autofocus placeholder="First Name"></input>
+                    <input type="text" id = "username" name="username" autofocus placeholder="username"></input>
                 </label>
             </div>
             <div>
                 <label class="email">email: 
-                        <input type="email" name="create_email" id="email" placeholder="email"></input>
+                        <input type="email" name="email" id="email" placeholder="email"></input>
                 </label>
             </div>
-            
+            <input class="center block" type="submit" value="Send Password"  >
         </form>
-        <button>Send Password</button>
+        
     </div>
 `;

@@ -9,9 +9,12 @@ function buildNavHTML(stateLinks){
 
 export default (state) => `
   <nav>
-  <ul><h2>
+  
+  <ul>
+  <h2>
     ${buildNavHTML(state.links.primary)}
-  </h2></ul>
+  </h2>
+  </ul>
   </nav>
 `;
 

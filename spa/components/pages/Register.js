@@ -33,6 +33,7 @@ ${state.title}
                     <input type="password" name="password_match" id="password_match" placeholder="retype password">
                 </label>
             </div>
+            <input class="center block" type="submit" value="Register"  >
         </form>
        
     </div>

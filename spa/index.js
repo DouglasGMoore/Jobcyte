@@ -29,34 +29,6 @@ function render(state) {
   clickHandler(state);
 }
 
-function geoFindMe() {
-  const status = document.querySelector("#status");
-  const mapLink = document.querySelector("#map-link");
-
-  mapLink.href = "";
-  mapLink.textContent = "";
-
-  function success(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-
-    status.textContent = "";
-    mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-    mapLink.textContent = `Latitude: ${latitude} , Longitude: ${longitude} `;
-  }
-
-  function error() {
-    status.textContent = "Unable to retrieve your location";
-  }
-
-  if (!navigator.geolocation) {
-    status.textContent = "Geolocation is not supported by your browser";
-  } else {
-    status.textContent = "Locating…";
-    navigator.geolocation.getCurrentPosition(success, error);
-  }
-}
-
 function handleRoutes(params) {
   render(states[capitalize(params.path)]);
 }
@@ -106,12 +78,13 @@ function clickHandler(state) {
           } else {
             render(states.Member);
             let err = document.getElementById("err");
+            let top = document.getElementById("top");
             let uName = response.data[0].username;
-            document
-              .querySelector("#find-me")
-              .addEventListener("click", geoFindMe);
-            err.innerText = `Welcome Back ${uName}!!!`;
-            console.log(response.data);
+            let email = response.data[0].email;
+
+            top.innerText = `Email: ${email}`;
+            err.innerText = `${uName}`;
+            console.log(response.data[0].email);
             // Member.user = response.data;
 
             axios
@@ -120,26 +93,97 @@ function clickHandler(state) {
                 // console.log(response.data);
                 if (response.data.error) {
                   // window.location.href = '/register';
+                } else {
+                  let list = document.getElementById("list");
+                  let bio = document.getElementById("top");
+
+                
+                let dbData, dbtime, realtime;
+
+                Object.entries(response.data).forEach(function(key, value) {
+                  //
+                  dbData = key[1];
+                  dbData['date'] = new Date(dbData['date']).toDateString();
+                  dbtime = dbData["time"].split(":")
+                  if (dbtime[0]>12){
+                    realtime = parseInt(dbtime[0]-12) +':'+dbtime[1]+"pm"
+                  } else {
+                    realtime = parseInt(dbtime[0]) +':'+dbtime[1]+'am';
+                  }
+                  
+                  console.log(parseInt(dbtime[0]-12))
+                  console.log(realtime)
+        
+                  list.innerHTML +=
+                    ' <tr><td width = "10%">' +
+                    dbData["title"] +
+                    '</td><td width="30%">' +
+                    dbData["date"] + ' at'
+                     +realtime
+                    "</td> </tr>";
+
+                    ;},
+
+                
+               
+                
+                axios
+              .get("http://localhost:3004/meetingsPast", data)
+              .then(function(response) {
+                // console.log(response.data);
+                if (response.data.error) {
+                  // window.location.href = '/register';
+                } else {
+                  let list2 = document.getElementById("list2");
+
+                
+                let dbData, dbtime, realtime;
+
+                Object.entries(response.data).forEach(function(key, value) {
+                  //
+                  dbData = key[1];
+                  dbData['date'] = new Date(dbData['date']).toDateString();
+                  dbtime = dbData["time"].split(":")
+                  if (dbtime[0]>12){
+                    realtime = parseInt(dbtime[0]-12) +':'+dbtime[1]+"pm"
+                  } else {
+                    realtime = parseInt(dbtime[0]) +':'+dbtime[1]+'am';
+                  }
+                  
+                  console.log(parseInt(dbtime[0]-12))
+                  console.log(realtime)
+        
+                  list2.innerHTML +=
+                    ' <tr><td width = "10%">' +
+                    dbData["title"] +
+                    '</td><td width="30%">' +
+                    dbData["date"] + ' at'
+                     +realtime
+                    "</td> </tr>";
+
+                    ;}
+
+                
+                )}
+              
+              
                 }
-
-                let list = document.getElementById("list");
-
-                Object.entries(response.data).forEach(
-                  ([key, value]) =>
-                    (list.innerHTML += `
-                                <tr><td width = "10%">${
-                                  value.name
-                                } </td><td width="30%">${
-                      value.time
-                    } </td><td width="60%">${value.date}</td></tr>`)
-                );
-              })
+                
+                
+                
+                )
+                )}
+              
+              
+              }
+                )
               .catch(function(error) {
                 console.log(error);
               });
+              
           }
 
-          console.log(request.session.username);
+          // console.log(request.session.username);
         })
         .catch(function(error) {
           console.log(error);
@@ -278,17 +322,175 @@ function clickHandler(state) {
         }
 
         let list = document.getElementById("list");
+        let dbData, dbtime, realtime;
 
-        Object.entries(response.data).forEach(
-          ([key, value]) =>
-            (list.innerHTML += `
-                    <tr><td width = "10%">${value.name} </td><td width="30%">${
-              value.time
-            } </td><td width="60%">${value.date}</td></tr>`)
-        );
+        Object.entries(response.data).forEach(function(key, value) {
+          //
+          dbData = key[1];
+          dbData['date'] = new Date(dbData['date']).toDateString();
+          dbtime = dbData["time"].split(":")
+          if (dbtime[0]>12){
+            realtime = parseInt(dbtime[0]-12) +':'+dbtime[1]+"pm"
+          } else {
+            realtime = parseInt(dbtime[0]) +':'+dbtime[1]+'am';
+          }
+          
+          console.log(parseInt(dbtime[0]-12))
+          console.log(realtime)
+
+          list.innerHTML +=
+            ' <tr><td width = "10%">' +'<a href ="">' +
+            dbData["title"]+'</a>'+
+            '</td><td width="30%">' +
+            dbData["date"] + ' at'
+             +realtime
+            "</td> </tr>";
+        });
       })
       .catch(function(error) {
         console.log(error);
       });
   }
+
+  if (state.pageContent === "Forgot") {
+    forgot.addEventListener("submit", event => {
+      // Might need to stop propigation
+      event.preventDefault();
+
+      // Get username and password values from form
+      let username = document.getElementById("username");
+      let email = document.getElementById("email");
+
+      console.log(username.value);
+      console.log(email.value);
+
+      // Create json request
+      const data = {
+        username: username.value,
+        email: email.value
+      };
+
+      axios.post("http://localhost:3004/forgot", data).then(function(response) {
+        // console.log(response.data);
+        if (response.data.error) {
+          console.log(response.data.error);
+          // render(states.Login);
+          let err = document.getElementById("err");
+
+          err.innerText = response.data.error;
+        } else {
+          render(states.Login);
+          let err = document.getElementById("err");
+          let uName = response.data[0].username;
+          let email = response.data[0].email;
+
+          console.log(response.data);
+        }
+      });
+    });
+  }
+
+  if (state.pageContent === "Meeting") {
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+    let map;
+    let infoWindow = new google.maps.InfoWindow();
+    let infowindow = new google.maps.InfoWindow();
+    let geocoder = new google.maps.Geocoder();
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 6
+      });
+
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            let pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            geocodeLatLng(geocoder, map, infowindow);
+
+            infoWindow.setPosition(pos);
+            // infoWindow.setContent('You are here!');
+            // infoWindow.open(map);
+            // map.setCenter(pos);
+            function geocodeLatLng(geocoder, map, infowindow) {
+              // var input = document.getElementById('latlng').value;
+              // var latinsStr = input.split(',', 2);
+              // var latlng = {'lat': parseFloat(lat), 'lng': parseFloat(lng)};
+              console.log(pos);
+
+              geocoder.geocode({ location: pos }, function(results, status) {
+                if (status === "OK") {
+                  if (results[0]) {
+                    map.setZoom(11);
+                    var marker = new google.maps.Marker({
+                      position: pos,
+                      map: map
+                    });
+
+                    infowindow.setContent(results[0].formatted_address);
+                    infowindow.open(map, marker);
+                  } else {
+                    window.alert("No results found");
+                  }
+                } else {
+                  window.alert("Geocoder failed due to: " + status);
+                }
+              });
+            }
+          },
+          function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(
+        browserHasGeolocation
+          ? "Error: The Geolocation service failed."
+          : "Error: Your browser doesn't support geolocation."
+      );
+      infoWindow.open(map);
+    }
+    initMap();
+  }
+}
+
+function geocodeLatLng(geocoder, map, infowindow) {
+  // var input = document.getElementById('latlng').value;
+  // var latlngStr = input.split(',', 2);
+  var latlng = { lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1]) };
+
+  geocoder.geocode({ location: pos }, function(results, status) {
+    if (status === "OK") {
+      if (results[0]) {
+        map.setZoom(11);
+        var marker = new google.maps.Marker({
+          position: latlng,
+          map: map
+        });
+
+        infowindow.setContent(results[0].formatted_address);
+        infowindow.open(map, marker);
+      } else {
+        window.alert("No results found");
+      }
+    } else {
+      window.alert("Geocoder failed due to: " + status);
+    }
+  });
 }
