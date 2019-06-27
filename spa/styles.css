@@ -7,6 +7,7 @@ body{
     border-radius: 5px;
 }
 #header{
+    color: #003049;
     font-family: 'Wallpoet', cursive;
     text-align: center;
     font-size: 1.5em;
@@ -20,18 +21,31 @@ body{
     background-color: orange;
     border-radius: 10px;
     padding: 10px;
-    font-size: 1.2em;
+    font-size: 1.0em;
+    border: solid 3px #003049;
+}
+#container2{
+    border: solid 3px #003049;
+    flex-direction: column;
+    display:flex;
+    width: 400px;
+    margin: 0px auto;
+    background-color: orange;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.0em;
 }
 #content{
+    font-size: 0.75;
     display: grid;
     justify-content: center;   
-    color: black; 
+    color: #003049; 
 }
 #footer{
     bottom: 0px;
     text-align: center;
     margin: 0px auto;
-    color: black;
+    color: #003049;
 }
 #meetingCreate{
 
@@ -40,6 +54,12 @@ form{
     margin: 0px auto;
 }
 #upcoming{
+    display: inline-block;
+    background: yellow;
+    border-radius: 5px;
+    margin:10px;
+}
+#past{
     display: inline-block;
     background: yellow;
     border-radius: 5px;
@@ -54,9 +74,9 @@ form{
 }
 
 nav{
+    
     display: flex;
     justify-content: center;
-    color: red;
 }
 ul{
     list-style: none;
@@ -67,8 +87,10 @@ li{
     text-decoration: none;
     display: inline;
     justify-content: center;
+    font-size: 0.85em;
 }
 a{
+    color: #D62828;
     text-decoration: none;
     
 }
@@ -77,6 +99,7 @@ label{
     float: right;
 }
 input{
+    font-size: 0.65em;
     width: 200px;
     height: 2em;
     border-radius: 5px;
@@ -104,21 +127,31 @@ input{
     color: red;
 }
 .black{
-    color: black;
+    color: #003049;
 }
 .font{
     font-family: "Times New Roman", Times, serif; 
 }
 td {
-    border: 3px solid black;
+    border: 3px solid #003049;
     text-align: left;
 }
 table {
         border-collapse: collapse;
 }
 .smlTxt{
-    font-size: 0.75em;
+    font-size: 0.7em;
+}
+.mdTxt{
+    font-size: 1.5;
 }
 h1{
     margin: 0px;
+}
+.loginbtn{
+    font-size: 0.66em;
+    margin-top: 10px;
+}
+.pass{
+    margin-bottom: 10px;
 }

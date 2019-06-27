@@ -118,7 +118,7 @@ function clickHandler(state) {
                     ' <tr><td width = "10%">' +
                     dbData["title"] +
                     '</td><td width="30%">' +
-                    dbData["date"] + ' at'
+                    dbData["date"] + ' at '
                      +realtime
                     "</td> </tr>";
 

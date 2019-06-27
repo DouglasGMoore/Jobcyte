@@ -132,7 +132,7 @@ app.get('/meeting/:title', (req, res) => {
 
     const connection = getConnection();
 
-    const userId = req.params.id;
+    const usemeetingrId = req.params.id;
     const queryString = 'SELECT * FROM meetings WHERE title = ?';
 
     connection.query(queryString, [ userId ], (err, rows, fields) => {

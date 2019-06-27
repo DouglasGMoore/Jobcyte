@@ -10,7 +10,7 @@ function buildNavHTML(stateLinks){
 }
 
 export default  (state) => `
-<div id="container">
+<div id="container2">
 <div id = "err" class ="center red"></div>
         <form id="login">
             <div>
@@ -24,13 +24,13 @@ export default  (state) => `
                 </label>
             </div>
          <div>   
-            <input class="center block" type="submit" value="Sign in"  >
+            <input class="center block loginbtn" type="submit" value="Sign in" >
         </div>
         </form>
         <div class = "center">
-            <ul><h3>
+            <ul><h2>
             ${buildNavHTML(state.links.secondary)}
-            </h3><ul>
+            </h2><ul>
         </div>    
     </div>
     
