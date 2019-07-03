@@ -32,19 +32,17 @@ function render(state) {
 function handleRoutes(params) {
   render(states[capitalize(params.path)]);
 }
-
+// Handel routing of pages when called
 router
   .on(":path", handleRoutes)
   .on("/", () => render(states.Login))
   .resolve();
 
-// render(states.Login);
-
+//  Adds event listeners and renders pages depending on if statement
 function clickHandler(state) {
   console.log(state);
 
   if (state.pageContent === "Login") {
-    console.log("i am working");
     const form = document.querySelector("#login");
 
     form.addEventListener("submit", event => {
@@ -54,9 +52,6 @@ function clickHandler(state) {
       // Get username and password values from form
       let userName = document.getElementById("usrName");
       let passwrd = document.getElementById("password");
-
-      console.log(userName.value);
-      console.log(passwrd.value);
 
       // Create json request
       const data = {
@@ -83,14 +78,12 @@ function clickHandler(state) {
             let email = response.data[0].email;
 
             top.innerText = `Email: ${email}`;
-            err.innerText = `${uName}`;
-            console.log(response.data[0].email);
-            // Member.user = response.data;
+            err.innerText = `${uName}`
 
             axios
               .get("http://localhost:3004/meetings", data)
               .then(function(response) {
-                // console.log(response.data);
+                
                 if (response.data.error) {
                   // window.location.href = '/register';
                 } else {
@@ -115,12 +108,12 @@ function clickHandler(state) {
                   console.log(realtime)
         
                   list.innerHTML +=
-                    ' <tr><td width = "10%">' +
-                    dbData["title"] +
-                    '</td><td width="30%">' +
-                    dbData["date"] + ' at '
-                     +realtime
-                    "</td> </tr>";
+                  ' <tr><td width = "10%">' +'<a href ="">' +
+                  dbData["title"]+'</a>'+
+                  '</td><td width="30%">' +
+                  dbData["date"] + ' at'
+                   +realtime
+                  "</td> </tr>";
 
                     ;},
 
@@ -154,12 +147,12 @@ function clickHandler(state) {
                   console.log(realtime)
         
                   list2.innerHTML +=
-                    ' <tr><td width = "10%">' +
-                    dbData["title"] +
-                    '</td><td width="30%">' +
-                    dbData["date"] + ' at'
-                     +realtime
-                    "</td> </tr>";
+                  ' <tr><td width = "10%">' +'<a href ="">' +
+                  dbData["title"]+'</a>'+
+                  '</td><td width="30%">' +
+                  dbData["date"] + ' at'
+                   +realtime
+                  "</td> </tr>";
 
                     ;}
 
@@ -300,9 +293,9 @@ function clickHandler(state) {
 
         Object.entries(response.data).forEach(
           ([key, value]) =>
-            (list.innerHTML += `<tr><td width = "30%">${
+            (list.innerHTML += `<tr><td width = "30%"><a href = "#">${
               value.username
-            } </td><td width="70%">${value.email}</td></tr>`)
+            }</a></td><td width="70%">${value.email}</td></tr>`)
         );
       })
       .catch(function(error) {
@@ -391,10 +384,9 @@ function clickHandler(state) {
   }
 
   if (state.pageContent === "Meeting") {
-    // Note: This example requires that you consent to location sharing when
-    // prompted by your browser. If you see the error "The Geolocation service
-    // failed.", it means you probably did not give permission for the browser to
-    // locate you.
+  // Start google map interaction
+  // Set variables tto be used in map and marker generation
+  
     let map;
     let infoWindow = new google.maps.InfoWindow();
     let infowindow = new google.maps.InfoWindow();
@@ -471,14 +463,12 @@ function clickHandler(state) {
 }
 
 function geocodeLatLng(geocoder, map, infowindow) {
-  // var input = document.getElementById('latlng').value;
-  // var latlngStr = input.split(',', 2);
   var latlng = { lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1]) };
 
   geocoder.geocode({ location: pos }, function(results, status) {
     if (status === "OK") {
       if (results[0]) {
-        map.setZoom(11);
+        map.setZoom(10);
         var marker = new google.maps.Marker({
           position: latlng,
           map: map
