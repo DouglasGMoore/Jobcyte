@@ -57,7 +57,7 @@ app.post('/register', (req, res) => {
 
 // Insert user info from form to meetings database
 app.post('/office', (req, res) => {
-    console.log('Title: ' + req.body.name);
+    console.log('name: ' + req.body.name);
 
 
     const name = req.body.title;
@@ -66,7 +66,7 @@ app.post('/office', (req, res) => {
     const time = req.body.time;
     const notes = req.body.notes;
     const location = req.body.location;
-    const queryString = 'INSERT INTO meetings (title, topic, date, time, notes, location) VALUES (?, ?, ?, ?, ?, ?)';
+    const queryString = 'INSERT INTO meetings (name, topic, date, time, notes, location) VALUES (?, ?, ?, ?, ?, ?)';
   
 
     getConnection().query(queryString, [ name, topic, date, time, notes, location ], (err, results, fields) => {
@@ -90,7 +90,7 @@ app.post('/login', (req, res) => {
     const password = req.body.password;
     const username = req.body.usrName;
 
-    const queryString = `SELECT * FROM Jobcyte.members WHERE username  = '${username}'`;
+    const queryString = `SELECT * FROM jobcyte.members WHERE username  = '${username}'`;
 
     // eslint-disable-next-line complexity
     getConnection().query(queryString, [ username ], (err, results, fields) => {
@@ -122,7 +122,7 @@ function getConnection(){
         'host': 'localhost',
         'user': 'root',
         'password': 'password',
-        'database': 'Jobcyte'
+        'database': 'jobcyte'
     });
 }
 
@@ -133,7 +133,7 @@ app.get('/meeting/:title', (req, res) => {
     const connection = getConnection();
 
     const usemeetingrId = req.params.id;
-    const queryString = 'SELECT * FROM meetings WHERE title = ?';
+    const queryString = 'SELECT * FROM meetings WHERE name = ?';
 
     connection.query(queryString, [ userId ], (err, rows, fields) => {
         if(err){
@@ -215,7 +215,7 @@ app.get('/', (req, res) => {
 app.post('/forgot', (req, res) => {
     let username = req.body.username;
     
-    const queryString = `SELECT * FROM Jobcyte.members WHERE username  = '${username}'`;
+    const queryString = `SELECT * FROM jobcyte.members WHERE username  = '${username}'`;
 
     // eslint-disable-next-line complexity
     getConnection().query(queryString, [ username ], (err, results, fields) => {

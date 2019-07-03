@@ -109,7 +109,7 @@ function clickHandler(state) {
         
                   list.innerHTML +=
                   ' <tr><td width = "10%">' +'<a href ="">' +
-                  dbData["title"]+'</a>'+
+                  dbData["name"]+'</a>'+
                   '</td><td width="30%">' +
                   dbData["date"] + ' at'
                    +realtime
@@ -148,7 +148,7 @@ function clickHandler(state) {
         
                   list2.innerHTML +=
                   ' <tr><td width = "10%">' +'<a href ="">' +
-                  dbData["title"]+'</a>'+
+                  dbData["name"]+'</a>'+
                   '</td><td width="30%">' +
                   dbData["date"] + ' at'
                    +realtime
@@ -333,7 +333,7 @@ function clickHandler(state) {
 
           list.innerHTML +=
             ' <tr><td width = "10%">' +'<a href ="">' +
-            dbData["title"]+'</a>'+
+            dbData["name"]+'</a>'+
             '</td><td width="30%">' +
             dbData["date"] + ' at'
              +realtime
